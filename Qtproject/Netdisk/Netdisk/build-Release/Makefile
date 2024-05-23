@@ -228,6 +228,7 @@ Makefile: ../Netdisk.pro D:/Qt/5.12.11/mingw73_32/mkspecs/win32-g++/qmake.conf D
 		D:/Qt/5.12.11/mingw73_32/mkspecs/features/toolchain.prf \
 		D:/Qt/5.12.11/mingw73_32/mkspecs/features/default_pre.prf \
 		D:/Qt/5.12.11/mingw73_32/mkspecs/features/win32/default_pre.prf \
+		../netapi/netapi.pri \
 		D:/Qt/5.12.11/mingw73_32/mkspecs/features/resolve_config.prf \
 		D:/Qt/5.12.11/mingw73_32/mkspecs/features/exclusive_builds_post.prf \
 		D:/Qt/5.12.11/mingw73_32/mkspecs/features/default_post.prf \
@@ -249,6 +250,7 @@ Makefile: ../Netdisk.pro D:/Qt/5.12.11/mingw73_32/mkspecs/win32-g++/qmake.conf D
 		../Netdisk.pro \
 		D:/Qt/5.12.11/mingw73_32/lib/Qt5Widgets.prl \
 		D:/Qt/5.12.11/mingw73_32/lib/Qt5Gui.prl \
+		D:/Qt/5.12.11/mingw73_32/lib/Qt5Network.prl \
 		D:/Qt/5.12.11/mingw73_32/lib/Qt5Core.prl \
 		D:/Qt/5.12.11/mingw73_32/lib/qtmain.prl
 	$(QMAKE) -o Makefile ..\Netdisk.pro -spec win32-g++ "CONFIG+=qtquickcompiler"
@@ -417,6 +419,7 @@ D:/Qt/5.12.11/mingw73_32/mkspecs/features/exclusive_builds.prf:
 D:/Qt/5.12.11/mingw73_32/mkspecs/features/toolchain.prf:
 D:/Qt/5.12.11/mingw73_32/mkspecs/features/default_pre.prf:
 D:/Qt/5.12.11/mingw73_32/mkspecs/features/win32/default_pre.prf:
+../netapi/netapi.pri:
 D:/Qt/5.12.11/mingw73_32/mkspecs/features/resolve_config.prf:
 D:/Qt/5.12.11/mingw73_32/mkspecs/features/exclusive_builds_post.prf:
 D:/Qt/5.12.11/mingw73_32/mkspecs/features/default_post.prf:
@@ -438,6 +441,7 @@ D:/Qt/5.12.11/mingw73_32/mkspecs/features/lex.prf:
 ../Netdisk.pro:
 D:/Qt/5.12.11/mingw73_32/lib/Qt5Widgets.prl:
 D:/Qt/5.12.11/mingw73_32/lib/Qt5Gui.prl:
+D:/Qt/5.12.11/mingw73_32/lib/Qt5Network.prl:
 D:/Qt/5.12.11/mingw73_32/lib/Qt5Core.prl:
 D:/Qt/5.12.11/mingw73_32/lib/qtmain.prl:
 qmake: FORCE
