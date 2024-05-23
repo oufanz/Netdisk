@@ -11,7 +11,7 @@ class CKernel : public QObject
 private:
     explicit CKernel(QObject *parent = nullptr);
     explicit CKernel(const CKernel &kernel){};
-    ~CKernel();
+    ~CKernel(){};
 
     void loadIniFile();
 signals:
@@ -19,7 +19,7 @@ signals:
 public:
     //单例模式
     static CKernel *GetInstance(){
-        static Ckernel kernel;
+        static CKernel kernel;
         return &kernel;
     }
 

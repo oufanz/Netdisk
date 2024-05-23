@@ -10,8 +10,8 @@ CKernel::CKernel(QObject *parent) : QObject(parent)
     loadIniFile();
 
     // 创建 MainDialog 实例
-    m_mainDialog = new MainDialog(this);
-
+    m_mainDialog = new MainDialog;
+    m_mainDialog -> show();
     // 连接信号和槽
     connect(m_mainDialog, SIGNAL(SIG_close()), this, SLOT(slot_destroy()));
 
@@ -32,7 +32,7 @@ CKernel::CKernel(QObject *parent) : QObject(parent)
  * ip=192.168.3.1
  * port=8008
  */
-void Ckernel::loadInifile()
+void CKernel::loadIniFile()
 {
     //默认值
     m_ip = "192.168.5.198";
@@ -65,7 +65,7 @@ void Ckernel::loadInifile()
 }
 
 //回收函数
-void Ckernel:: slot_destroyed(){
+void CKernel:: slot_destroy(){
     qDebug()<< __func__;//测试是否回收
     delete m_mainDialog;
 }
