@@ -33,8 +33,9 @@ void TcpClientMediator::CloseNet()
 bool TcpClientMediator::SendData( unsigned int lSendIP , char* buf , int nlen )
 {
     Q_UNUSED(lSendIP);
-    if( IsConnected() )
+    if( IsConnected() ){
         return m_pNet->SendData( 0 , buf, nlen);
+    }
     else
     {
         m_pNet->UnInitNet();

@@ -3,21 +3,45 @@
 #include <QCoreApplication>
 #include <QFileInfo>
 #include <QSettings>//配置文件需要的类
-
+#include "TcpClientMediator.h"
+#include "TcpServerMediator.h"
+#include<QMessageBox>
 CKernel::CKernel(QObject *parent) : QObject(parent)
 {
+#ifdef USE_SERVER
     // 加载配置文件
     loadIniFile();
+    m_tcpServer = new TcpServerMediator;
+    connect(m_tcpServer,SIGNAL(SIG_ReadyData(uint,char*,int)),this,
+            SLOT(slot_dealServerData(uint,char*,int)));
+    //开启服务器
+    m_tcpServer->OpenNet();
+#endif
+
+    //绑定网络信号与槽
+    m_tcpClient = new TcpClientMediator;
+
+    connect(m_tcpClient,SIGNAL(SIG_ReadyData(uint,char*,int)),this,
+            SLOT(slot_dealClientData(uint,char*,int)));
+
+
+    m_tcpClient->OpenNet("10.56.239.64");//本机物理机IP地址
 
     // 创建 MainDialog 实例
     m_mainDialog = new MainDialog;
-    m_mainDialog -> show();
     // 连接信号和槽
     connect(m_mainDialog, SIGNAL(SIG_close()), this, SLOT(slot_destroy()));
-
     // 显示 MainDialog
-    m_mainDialog->show();
+    m_mainDialog -> show();
+#ifdef USE_SERVER
+    //测试对服务器发送数据
+    char strBuf[100]= "hello server";
+    int len=strlen("hello server")+1;
+    m_tcpClient->SendData(0,strBuf,len);//客户端一定发给服务器，套接字参数随意.
+    //sizeof +数组名 数组大小 ，strlen()遇到'\0'前的大小
+#endif
 }
+
 
 // 其他成员函数的实现应在此处添加
 
@@ -35,8 +59,8 @@ CKernel::CKernel(QObject *parent) : QObject(parent)
 void CKernel::loadIniFile()
 {
     //默认值
-    m_ip = "192.168.5.198";
-    m_port = "8004";
+    m_ip = "10.56.239.64";
+    m_port = "8000";
 
     //获取exe目录
     QString path = QCoreApplication::applicationDirPath();
@@ -69,3 +93,23 @@ void CKernel:: slot_destroy(){
     qDebug()<< __func__;//测试是否回收
     delete m_mainDialog;
 }
+//客户端处理数据;
+void CKernel::slot_dealClientData(unsigned int lSendIP, char *buf, int nlen)
+{
+    //接收到数据
+    QString str=QString("来自服务端:%1").arg(QString::fromStdString(buf));
+    QMessageBox::about(NULL ,"提示",str);//about阻塞：模态窗口：弹出后别的应用不能点击了。
+    //回收空间
+    delete []buf;
+}
+#ifdef USE_SERVER
+void CKernel::slot_dealServerData(unsigned int lSendIP, char *buf, int nlen)
+{
+    //接收到数据
+    QString str=QString("来自客户端:%1").arg(QString::fromStdString(buf));
+    QMessageBox::about(NULL ,"提示",str);//about阻塞：模态窗口：弹出后别的应用不能点击了。
+    m_tcpServer->SendData(lSendIP,buf,nlen);//原路返回
+    //回收空间
+    delete []buf;
+}
+#endif
