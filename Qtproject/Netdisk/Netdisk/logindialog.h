@@ -14,6 +14,17 @@ class LoginDialog : public QDialog
 public:
     explicit LoginDialog(QWidget *parent = nullptr);
     ~LoginDialog();
+signals:
+    void SIG_registerCommit(QString tel,QString password,QString name);
+    void SIG_LoginCommit(QString tel,QString password);
+private slots:
+    void on_pb_login_clicked();
+
+    void on_pb_login_register_clicked();
+
+    void on_pb_clear_register_clicked();
+
+    void on_pb_clear_clicked();
 
 private:
     Ui::LoginDialog *ui;

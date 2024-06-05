@@ -5,6 +5,7 @@
 #include "maindialog.h"
 #include "INetMediator.h"//通过中介者使用
 #include <packdef.h>
+#include<logindialog.h>
 class INetMediator;
 //协议映射表
 class CKernel;
@@ -20,9 +21,10 @@ private:
     explicit CKernel(QObject *parent = nullptr);
     explicit CKernel(const CKernel &kernel){};
     ~CKernel(){};
-
+    LoginDialog* m_loginDialog;
     void loadIniFile();
     void setNetPackMap();
+    void SendData(char *buf,int len);
 signals:
 
 public:
@@ -32,7 +34,12 @@ public:
         return &kernel;
     }
 
+
 private slots:
+    //界面槽函数
+    void slot_registerCommit(QString tel,QString password,QString name);
+    void slot_LoginCommit(QString tel,QString password);
+
     //普通槽函数
     void slot_destroy();
     //网络响应槽函数

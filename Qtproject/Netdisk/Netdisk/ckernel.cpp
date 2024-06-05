@@ -5,7 +5,8 @@
 #include <QSettings>//配置文件需要的类
 #include "TcpClientMediator.h"
 #include "TcpServerMediator.h"
-#include<QMessageBox>
+#include <QMessageBox>
+#include <QDebug>
 CKernel::CKernel(QObject *parent) : QObject(parent)
 {
 #ifdef USE_SERVER
@@ -25,14 +26,17 @@ CKernel::CKernel(QObject *parent) : QObject(parent)
             SLOT(slot_dealClientData(uint,char*,int)));
 
 
-    m_tcpClient->OpenNet("192.168.172.1");//本机物理机IP地址
-
-    // 创建 MainDialog 实例
-    m_mainDialog = new MainDialog;
+    //m_tcpClient->OpenNet("192.168.172.1");//本机物理机IP地址
+    m_loginDialog = new LoginDialog;//登录窗口创建
+    connect(m_loginDialog,SIGNAL(SIG_registerCommit(QString,QString,QString)),
+               this,SLOT(slot_registerCommit(QString,QString,QString)));
+    connect(m_loginDialog,SIGNAL(SIG_LoginCommit(QString,QString)),
+               this,SLOT(slot_LoginCommit(QString,QString)));
+    m_loginDialog->show();
+    m_mainDialog = new MainDialog;// 创建 MainDialog 实例
     // 连接信号和槽
     connect(m_mainDialog, SIGNAL(SIG_close()), this, SLOT(slot_destroy()));
-    // 显示 MainDialog
-    m_mainDialog -> show();
+    //m_mainDialog -> show();// 显示 MainDialog
 #ifdef USE_SERVER
     //测试对服务器发送数据
 //    char strBuf[100]= "hello server";
@@ -41,7 +45,7 @@ CKernel::CKernel(QObject *parent) : QObject(parent)
     //sizeof +数组名 数组大小 ，strlen()遇到'\0'前的大小
 #endif
     STRU_LOGIN_RQ rq;
-    m_tcpClient->SendData(0,(char*)&rq,sizeof(rq));
+    //m_tcpClient->SendData(0,(char*)&rq,sizeof(rq));
 }
 
 #define NetMap( a ) m_netPackMap[ a - _DEF_PACK_BASE ]
@@ -53,6 +57,31 @@ void CKernel::setNetPackMap()
     //作用：通过来的协议头过来找到对应处理的函数指针
     NetMap(_DEF_PACK_LOGIN_RS) = &CKernel::slot_dealLoginRs;
 
+}
+
+void CKernel::SendData(char *buf, int len)
+{
+    m_tcpClient->SendData(0,buf,len);
+}
+
+void CKernel::slot_registerCommit(QString tel, QString password, QString name)
+{
+    STRU_REGISTER_RQ rq;
+    strcpy(rq.tel,tel.toStdString().c_str());
+    strcpy(rq.password,password.toStdString().c_str());
+    //名字兼容中文
+    std::string strName = name.toStdString();
+    strcpy(rq.name,strName.c_str());
+    SendData((char*)&rq,sizeof(rq));
+
+}
+
+void CKernel::slot_LoginCommit(QString tel, QString password)
+{
+    STRU_LOGIN_RQ rq;
+    strcpy(rq.tel,tel.toStdString().c_str());
+    strcpy(rq.password,password.toStdString().c_str());
+    SendData((char*)&rq,sizeof(rq));
 }
 
 // 其他成员函数的实现应在此处添加
@@ -104,9 +133,11 @@ void CKernel::loadIniFile()
 //回收函数
 void CKernel:: slot_destroy(){
     qDebug()<< __func__;//测试是否回收
+    m_tcpClient->CloseNet();
+    delete m_tcpClient;
     delete m_mainDialog;
+    delete m_loginDialog;
 }
-#include<QDebug>
 //客户端处理数据;
 void CKernel::slot_dealClientData(unsigned int lSendIP, char *buf, int nlen)
 {
