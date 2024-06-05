@@ -55,10 +55,11 @@ typedef struct STRU_REGISTER_RS
 	//回复结果
 	STRU_REGISTER_RS(): type(_DEF_PACK_REGISTER_RS) , result(register_success)
 	{
+        memset(name,0,sizeof name);
 	}
 	PackType type;
 	int result;
-
+    char name[_MAX_SIZE];
 }STRU_REGISTER_RS;
 
 //登录

@@ -21,8 +21,8 @@ QT_BEGIN_MOC_NAMESPACE
 QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_CKernel_t {
-    QByteArrayData data[9];
-    char stringdata0[85];
+    QByteArrayData data[10];
+    char stringdata0[102];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -39,11 +39,13 @@ QT_MOC_LITERAL(4, 42, 7), // "lSendIP"
 QT_MOC_LITERAL(5, 50, 5), // "char*"
 QT_MOC_LITERAL(6, 56, 3), // "buf"
 QT_MOC_LITERAL(7, 60, 4), // "nlen"
-QT_MOC_LITERAL(8, 65, 19) // "slot_dealServerData"
+QT_MOC_LITERAL(8, 65, 19), // "slot_dealServerData"
+QT_MOC_LITERAL(9, 85, 16) // "slot_dealLoginRs"
 
     },
     "CKernel\0slot_destroy\0\0slot_dealClientData\0"
-    "lSendIP\0char*\0buf\0nlen\0slot_dealServerData"
+    "lSendIP\0char*\0buf\0nlen\0slot_dealServerData\0"
+    "slot_dealLoginRs"
 };
 #undef QT_MOC_LITERAL
 
@@ -53,7 +55,7 @@ static const uint qt_meta_data_CKernel[] = {
        8,       // revision
        0,       // classname
        0,    0, // classinfo
-       3,   14, // methods
+       4,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -61,12 +63,14 @@ static const uint qt_meta_data_CKernel[] = {
        0,       // signalCount
 
  // slots: name, argc, parameters, tag, flags
-       1,    0,   29,    2, 0x08 /* Private */,
-       3,    3,   30,    2, 0x08 /* Private */,
-       8,    3,   37,    2, 0x08 /* Private */,
+       1,    0,   34,    2, 0x08 /* Private */,
+       3,    3,   35,    2, 0x08 /* Private */,
+       8,    3,   42,    2, 0x08 /* Private */,
+       9,    3,   49,    2, 0x08 /* Private */,
 
  // slots: parameters
     QMetaType::Void,
+    QMetaType::Void, QMetaType::UInt, 0x80000000 | 5, QMetaType::Int,    4,    6,    7,
     QMetaType::Void, QMetaType::UInt, 0x80000000 | 5, QMetaType::Int,    4,    6,    7,
     QMetaType::Void, QMetaType::UInt, 0x80000000 | 5, QMetaType::Int,    4,    6,    7,
 
@@ -82,6 +86,7 @@ void CKernel::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, voi
         case 0: _t->slot_destroy(); break;
         case 1: _t->slot_dealClientData((*reinterpret_cast< uint(*)>(_a[1])),(*reinterpret_cast< char*(*)>(_a[2])),(*reinterpret_cast< int(*)>(_a[3]))); break;
         case 2: _t->slot_dealServerData((*reinterpret_cast< uint(*)>(_a[1])),(*reinterpret_cast< char*(*)>(_a[2])),(*reinterpret_cast< int(*)>(_a[3]))); break;
+        case 3: _t->slot_dealLoginRs((*reinterpret_cast< uint(*)>(_a[1])),(*reinterpret_cast< char*(*)>(_a[2])),(*reinterpret_cast< int(*)>(_a[3]))); break;
         default: ;
         }
     }
@@ -116,13 +121,13 @@ int CKernel::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 3)
+        if (_id < 4)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 3;
+        _id -= 4;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 3)
+        if (_id < 4)
             *reinterpret_cast<int*>(_a[0]) = -1;
-        _id -= 3;
+        _id -= 4;
     }
     return _id;
 }

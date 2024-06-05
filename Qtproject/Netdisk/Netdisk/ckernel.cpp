@@ -25,7 +25,7 @@ CKernel::CKernel(QObject *parent) : QObject(parent)
             SLOT(slot_dealClientData(uint,char*,int)));
 
 
-    m_tcpClient->OpenNet("10.56.239.64");//本机物理机IP地址
+    m_tcpClient->OpenNet("192.168.172.1");//本机物理机IP地址
 
     // 创建 MainDialog 实例
     m_mainDialog = new MainDialog;
@@ -35,13 +35,25 @@ CKernel::CKernel(QObject *parent) : QObject(parent)
     m_mainDialog -> show();
 #ifdef USE_SERVER
     //测试对服务器发送数据
-    char strBuf[100]= "hello server";
-    int len=strlen("hello server")+1;
-    m_tcpClient->SendData(0,strBuf,len);//客户端一定发给服务器，套接字参数随意.
+//    char strBuf[100]= "hello server";
+//    int len=strlen("hello server")+1;
+//    m_tcpClient->SendData(0,strBuf,len);//客户端一定发给服务器，套接字参数随意.
     //sizeof +数组名 数组大小 ，strlen()遇到'\0'前的大小
 #endif
+    STRU_LOGIN_RQ rq;
+    m_tcpClient->SendData(0,(char*)&rq,sizeof(rq));
 }
 
+#define NetMap( a ) m_netPackMap[ a - _DEF_PACK_BASE ]
+//建立协议表
+void CKernel::setNetPackMap()
+{
+    memset(m_netPackMap,0,sizeof(PFUN)*_DEF_PACK_COUNT);
+    //key:协议头偏移量, value 函数指针
+    //作用：通过来的协议头过来找到对应处理的函数指针
+    NetMap(_DEF_PACK_LOGIN_RS) = &CKernel::slot_dealLoginRs;
+
+}
 
 // 其他成员函数的实现应在此处添加
 
@@ -88,20 +100,38 @@ void CKernel::loadIniFile()
     qDebug()<<"ip:"<<m_ip<< "port:"<<m_port;
 }
 
+
 //回收函数
 void CKernel:: slot_destroy(){
     qDebug()<< __func__;//测试是否回收
     delete m_mainDialog;
 }
+#include<QDebug>
 //客户端处理数据;
 void CKernel::slot_dealClientData(unsigned int lSendIP, char *buf, int nlen)
 {
     //接收到数据
-    QString str=QString("来自服务端:%1").arg(QString::fromStdString(buf));
-    QMessageBox::about(NULL ,"提示",str);//about阻塞：模态窗口：弹出后别的应用不能点击了。
+   // QString str=QString("来自服务端:%1").arg(QString::fromStdString(buf));
+    //QMessageBox::about(NULL ,"提示",str);//about阻塞：模态窗口：弹出后别的应用不能点击了。
+    int type = *(int*)buf;
+    qDebug()<< __func__;
+    if( type >= _DEF_PACK_BASE && type < _DEF_PACK_BASE+_DEF_PACK_COUNT){
+      PFUN pf =  NetMap(type);
+      if( pf ) {
+          //由于是类成员函数指针，所以需要this调用
+          (this->*pf)(lSendIP,buf,nlen);
+
+      }
+    }
     //回收空间
     delete []buf;
 }
+void CKernel::slot_dealLoginRs(unsigned int lSendIP, char *buf, int nlen)
+{
+
+}
+
+
 #ifdef USE_SERVER
 void CKernel::slot_dealServerData(unsigned int lSendIP, char *buf, int nlen)
 {

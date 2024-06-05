@@ -1,0 +1,45 @@
+#include "logindialog.h"
+#include "ui_logindialog.h"
+
+LoginDialog::LoginDialog(QWidget *parent) :
+    QDialog(parent),
+    ui(new Ui::LoginDialog)
+{
+    ui->setupUi(this);
+}
+
+LoginDialog::~LoginDialog()
+{
+    delete ui;
+}
+
+void LoginDialog::on_pb_login_clicked()
+{
+    
+}
+//信息采集
+//过滤
+//查看是否为空
+//
+void LoginDialog::on_pb_login_register_clicked()
+{
+    
+}
+
+//清空注册页面
+void LoginDialog::on_pb_clear_register_clicked()
+{
+    ui->le_phone_register->setText("");
+    ui->le_name_register->setText("");
+    ui->le_password_register->setText("");
+    ui->le_password_confrim_register->setText("");
+
+}
+//清空登录页面
+void LoginDialog::on_pb_clear_clicked()
+{
+    ui->le_password->setText("");
+    ui->le_phone->setText("");
+    
+}
+

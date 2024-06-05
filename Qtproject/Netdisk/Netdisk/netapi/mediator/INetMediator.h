@@ -4,7 +4,7 @@
 
 #define _DEF_TCP_PORT  (8000)
 #define _DEF_UDP_PORT  (1234)
-#define _DEF_SERVER_IP ("10.56.239.64")
+#define _DEF_SERVER_IP ("192.168.172.128")
 
 class INet;
 class INetMediator : public QObject
