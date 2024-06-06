@@ -6,6 +6,7 @@
 #include "INetMediator.h"//通过中介者使用
 #include <packdef.h>
 #include<logindialog.h>
+
 class INetMediator;
 //协议映射表
 class CKernel;

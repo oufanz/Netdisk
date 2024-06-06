@@ -7,6 +7,9 @@
 #include "TcpServerMediator.h"
 #include <QMessageBox>
 #include <QDebug>
+#include "md5.h"
+#define MD5_KEY "ou_fan"
+#define NetMap( a ) m_netPackMap[ a - _DEF_PACK_BASE ]
 CKernel::CKernel(QObject *parent) : QObject(parent)
 {
 #ifdef USE_SERVER
@@ -43,12 +46,12 @@ CKernel::CKernel(QObject *parent) : QObject(parent)
 //    int len=strlen("hello server")+1;
 //    m_tcpClient->SendData(0,strBuf,len);//客户端一定发给服务器，套接字参数随意.
     //sizeof +数组名 数组大小 ，strlen()遇到'\0'前的大小
-#endif
-    STRU_LOGIN_RQ rq;
+    //STRU_LOGIN_RQ rq;
     //m_tcpClient->SendData(0,(char*)&rq,sizeof(rq));
+#endif
+
 }
 
-#define NetMap( a ) m_netPackMap[ a - _DEF_PACK_BASE ]
 //建立协议表
 void CKernel::setNetPackMap()
 {
@@ -57,6 +60,13 @@ void CKernel::setNetPackMap()
     //作用：通过来的协议头过来找到对应处理的函数指针
     NetMap(_DEF_PACK_LOGIN_RS) = &CKernel::slot_dealLoginRs;
 
+}
+//生成MD5函数：传入string，调用toString()得到MD5加密结果
+static std::string getMD5(QString val){//static 仅当前文件可用
+    QString str = QString ("%1_%2").arg(val).arg(MD5_KEY);
+    MD5 md(str.toStdString());
+    qDebug()<< str<<"md5:"<<md.toString().c_str();
+    return md.toString();
 }
 
 void CKernel::SendData(char *buf, int len)
@@ -68,7 +78,8 @@ void CKernel::slot_registerCommit(QString tel, QString password, QString name)
 {
     STRU_REGISTER_RQ rq;
     strcpy(rq.tel,tel.toStdString().c_str());
-    strcpy(rq.password,password.toStdString().c_str());
+    //strcpy(rq.password,password.toStdString().c_str());
+    strcpy(rq.password,getMD5(password).c_str());
     //名字兼容中文
     std::string strName = name.toStdString();
     strcpy(rq.name,strName.c_str());
@@ -80,7 +91,7 @@ void CKernel::slot_LoginCommit(QString tel, QString password)
 {
     STRU_LOGIN_RQ rq;
     strcpy(rq.tel,tel.toStdString().c_str());
-    strcpy(rq.password,password.toStdString().c_str());
+    strcpy(rq.password,getMD5(password).c_str());
     SendData((char*)&rq,sizeof(rq));
 }
 

@@ -2,7 +2,7 @@ QT       += core gui
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
-CONFIG += c++11
+CONFIG += c++17
 
 # You can make your code fail to compile if it uses deprecated APIs.
 # In order to do so, uncomment the following line.
@@ -10,6 +10,12 @@ CONFIG += c++11
 
 include(./netapi/netapi.pri)
 INCLUDEPATH += ./netapi/
+include(./md5/md5.pri)
+INCLUDEPATH += ./md5/
+
+
+
+
 SOURCES += \
     ckernel.cpp \
     logindialog.cpp \
@@ -32,5 +38,7 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 
 RESOURCES += \
     resourse.qrc
+
+DISTFILES +=
 
 

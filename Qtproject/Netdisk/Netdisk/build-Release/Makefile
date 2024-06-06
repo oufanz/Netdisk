@@ -229,6 +229,7 @@ Makefile: ../Netdisk.pro D:/Qt/5.12.11/mingw73_32/mkspecs/win32-g++/qmake.conf D
 		D:/Qt/5.12.11/mingw73_32/mkspecs/features/default_pre.prf \
 		D:/Qt/5.12.11/mingw73_32/mkspecs/features/win32/default_pre.prf \
 		../netapi/netapi.pri \
+		../md5/md5.pri \
 		D:/Qt/5.12.11/mingw73_32/mkspecs/features/resolve_config.prf \
 		D:/Qt/5.12.11/mingw73_32/mkspecs/features/exclusive_builds_post.prf \
 		D:/Qt/5.12.11/mingw73_32/mkspecs/features/default_post.prf \
@@ -420,6 +421,7 @@ D:/Qt/5.12.11/mingw73_32/mkspecs/features/toolchain.prf:
 D:/Qt/5.12.11/mingw73_32/mkspecs/features/default_pre.prf:
 D:/Qt/5.12.11/mingw73_32/mkspecs/features/win32/default_pre.prf:
 ../netapi/netapi.pri:
+../md5/md5.pri:
 D:/Qt/5.12.11/mingw73_32/mkspecs/features/resolve_config.prf:
 D:/Qt/5.12.11/mingw73_32/mkspecs/features/exclusive_builds_post.prf:
 D:/Qt/5.12.11/mingw73_32/mkspecs/features/default_post.prf:
