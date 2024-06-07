@@ -54,6 +54,8 @@ private:
     QString m_ip;
     QString m_port;
 
+    QString m_name;
+    QString m_id;
     INetMediator *m_tcpClient;
     //协议映射表，key值（偏移量）找到对应的函数指针
     PFUN m_netPackMap[_DEF_PACK_COUNT];

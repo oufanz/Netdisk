@@ -173,7 +173,26 @@ void CKernel::slot_dealClientData(unsigned int lSendIP, char *buf, int nlen)
 }
 void CKernel::slot_dealLoginRs(unsigned int lSendIP, char *buf, int nlen)
 {
-
+    qDebug()<< __func__;
+    STRU_LOGIN_RS * rs = (STRU_LOGIN_RS *)buf;
+    //根据不同结果显示
+    switch( rs->result ){
+        case tel_not_exist:
+           QMessageBox::about(m_loginDialog,"提示","手机号不存在，登录失败");
+        break;
+        case password_error:
+            QMessageBox::about(m_loginDialog,"提示","密码错误，登录失败");
+        break;
+        case login_success :
+            //前台
+            m_loginDialog ->hide();
+            m_mainDialog->show();
+            //后台
+            m_id=rs->name;
+            m_name=rs->name;
+            //获取该目录下的文件
+        break;
+    }
 }
 
 void CKernel::slot_dealRegisterRs(unsigned int lSendIP, char *buf, int nlen)

@@ -1,7 +1,7 @@
 #pragma once
 
 #include<memory.h>
-
+#include<string>
 #define _DEF_BUFFER         (4096)
 #define _DEF_CONTENT_SIZE	(1024)
 #define _MAX_SIZE           (40)
@@ -25,7 +25,7 @@
 #define name_is_exist		(1)
 #define register_success	(2)
 //登录请求的结果
-#define user_not_exist		(0)
+#define tel_not_exist		(0)
 #define password_error		(1)
 #define login_success		(2)
 
@@ -77,18 +77,20 @@ typedef struct STRU_LOGIN_RQ
 
 }STRU_LOGIN_RQ;
 
+
 typedef struct STRU_LOGIN_RS
 {
-	// 需要 结果 , 用户的id
-	STRU_LOGIN_RS(): type(_DEF_PACK_LOGIN_RS) , result(login_success),userid(0)
-	{
-	}
-	PackType type;
-	int result;
-	int userid;
+    //登录需要: 手机号 密码
+    STRU_LOGIN_RS():type(_DEF_PACK_LOGIN_RS),result(login_success),userid(0)
+    {
+        memset( name , 0, sizeof(name) );
+    }
+    PackType type;
+    int result;
+    int userid;
+    char name[_MAX_SIZE];
 
 }STRU_LOGIN_RS;
-
 
 
 
