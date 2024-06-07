@@ -47,6 +47,7 @@ private slots:
     void slot_dealClientData(unsigned int lSendIP, char *buf, int nlen);
     void slot_dealServerData(unsigned int lSendIP, char *buf, int nlen);
     void slot_dealLoginRs(unsigned int lSendIP, char *buf, int nlen);
+    void slot_dealRegisterRs(unsigned int lSendIP, char *buf, int nlen);
 private:
     MainDialog *m_mainDialog;
 

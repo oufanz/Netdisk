@@ -12,24 +12,24 @@
 #define NetMap( a ) m_netPackMap[ a - _DEF_PACK_BASE ]
 CKernel::CKernel(QObject *parent) : QObject(parent)
 {
-#ifdef USE_SERVER
+    //建立协议表
+    setNetPackMap();
     // 加载配置文件
     loadIniFile();
+#ifdef USE_SERVER
     m_tcpServer = new TcpServerMediator;
     connect(m_tcpServer,SIGNAL(SIG_ReadyData(uint,char*,int)),this,
             SLOT(slot_dealServerData(uint,char*,int)));
     //开启服务器
     m_tcpServer->OpenNet();
 #endif
-
     //绑定网络信号与槽
     m_tcpClient = new TcpClientMediator;
-
     connect(m_tcpClient,SIGNAL(SIG_ReadyData(uint,char*,int)),this,
             SLOT(slot_dealClientData(uint,char*,int)));
+    //填入服务端的ip地址
+    m_tcpClient->OpenNet(m_ip.toStdString().c_str(),m_port.toInt());
 
-
-    //m_tcpClient->OpenNet("192.168.172.1");//本机物理机IP地址
     m_loginDialog = new LoginDialog;//登录窗口创建
     connect(m_loginDialog,SIGNAL(SIG_registerCommit(QString,QString,QString)),
                this,SLOT(slot_registerCommit(QString,QString,QString)));
@@ -59,6 +59,8 @@ void CKernel::setNetPackMap()
     //key:协议头偏移量, value 函数指针
     //作用：通过来的协议头过来找到对应处理的函数指针
     NetMap(_DEF_PACK_LOGIN_RS) = &CKernel::slot_dealLoginRs;
+    NetMap(_DEF_PACK_REGISTER_RS) = &CKernel::slot_dealRegisterRs;
+
 
 }
 //生成MD5函数：传入string，调用toString()得到MD5加密结果
@@ -111,11 +113,12 @@ void CKernel::slot_LoginCommit(QString tel, QString password)
 void CKernel::loadIniFile()
 {
     //默认值
-    m_ip = "10.56.239.64";
-    m_port = "8000";
+    m_ip = "192.168.172.2";
+    m_port = "8004";
 
     //获取exe目录
-    QString path = QCoreApplication::applicationDirPath();
+    QString path = QCoreApplication::applicationDirPath()+
+            "/config.ini";
     //根据目录,看文件是否存在
     QFileInfo info(path);
     QSettings setting(path ,QSettings::IniFormat);
@@ -137,7 +140,7 @@ void CKernel::loadIniFile()
     }
     //关闭组
     setting.endGroup();
-    qDebug()<<"ip:"<<m_ip<< "port:"<<m_port;
+    qDebug()<<"ip:"<<m_ip<< "port:"<< m_port;
 }
 
 
@@ -171,6 +174,22 @@ void CKernel::slot_dealClientData(unsigned int lSendIP, char *buf, int nlen)
 void CKernel::slot_dealLoginRs(unsigned int lSendIP, char *buf, int nlen)
 {
 
+}
+
+void CKernel::slot_dealRegisterRs(unsigned int lSendIP, char *buf, int nlen)
+{
+    //拆包
+    STRU_LOGIN_RS* rs=(STRU_LOGIN_RS*)buf;
+    switch (rs->result) {
+        case tel_is_exist:
+            QMessageBox::about(m_loginDialog,"提示","用户已存在，注册失败");
+        break;
+    case name_is_exist:
+            QMessageBox::about(m_loginDialog,"提示","昵称已存在，注册失败");
+        case register_success:
+            QMessageBox::about(m_loginDialog,"提示","注册成功!");
+        break;
+    }
 }
 
 
