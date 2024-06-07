@@ -119,17 +119,23 @@ typedef struct STRU_LOGIN_RQ
 
 typedef struct STRU_LOGIN_RS
 {
-    // 需要 结果 , 用户的id
-    STRU_LOGIN_RS(): type(_DEF_PACK_LOGIN_RS) , result(login_success),userid(0)
+    //登录需要: 手机号 密码
+    STRU_LOGIN_RS():type(_DEF_PACK_LOGIN_RS),result(login_success),userid(0)
     {
+        memset( name , 0, sizeof(name) );
     }
     PackType type;
     int result;
     int userid;
+    char name[_MAX_SIZE];
 
 }STRU_LOGIN_RS;
 
-
+struct UserInfo{
+    int userid;
+    std::string name;
+    int clientfd;
+};
 
 
 
