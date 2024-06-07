@@ -23,12 +23,13 @@ int CMysql::SelectMysql(char* szSql,int nColumn,list<string>& lst)
 
     if(mysql_query(conn,szSql)) {  // 查询SQL是否合法
         pthread_mutex_unlock(&m_lock );  // 查询失败，解锁并返回FALSE
+        std::cout<<"SQL不合法"<<std::endl;
         return FALSE;  
     }
     results = mysql_store_result(conn);  // 将结果放在result中
     pthread_mutex_unlock(&m_lock );   // 解锁
 
-    if(NULL == results)return FALSE;   // result为空，返回FALSE
+    if(NULL == results) return FALSE;   // result为空，返回FALSE
     MYSQL_ROW record;     // 定义记录行
     while((record = mysql_fetch_row(results)))  // 遍历查询结果
     {

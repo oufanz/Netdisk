@@ -4,7 +4,7 @@
 
 int main(int argc,char *argv[])
 {
-    int port = 8000;
+    int port = 8004;
     if( argc >= 2 )
     {
         port = atoi(argv[1]);

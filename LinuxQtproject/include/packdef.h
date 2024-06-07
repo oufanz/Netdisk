@@ -62,10 +62,11 @@
 
 //返回的结果
 //注册请求的结果
-#define user_is_exist		(0)
-#define register_success	(1)
+#define tel_is_exist		(0)
+#define name_is_exist		(1)
+#define register_success	(2)
 //登录请求的结果
-#define user_not_exist		(0)
+#define tel_not_exist		(0)
 #define password_error		(1)
 #define login_success		(2)
 
