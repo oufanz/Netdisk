@@ -21,6 +21,13 @@ public:
 protected:
     void closeEvent(QCloseEvent *event); // 重写关闭事件处理函数
 
+private slots:
+    void on_pb_share_clicked();
+
+    void on_pb_file_clicked();
+
+    void on_pb_transmit_clicked();
+
 private:
     Ui::MainDialog *ui; // 指向界面设计的指针
 };

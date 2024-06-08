@@ -6,6 +6,15 @@ MainDialog::MainDialog(QWidget *parent)
     , ui(new Ui::MainDialog)
 {
     ui->setupUi(this);
+    //进行一次默认文件分页
+    //文件分页
+    ui->sw_page->setCurrentIndex(0);
+    //传输页面默认分页
+    ui->tw_transmit->setCurrentIndex(2);
+    //设置标题
+    this->setWindowTitle("欧凡网盘");
+    //设置最小最大化
+    this->setWindowFlags(Qt::WindowMinMaxButtonsHint|Qt::WindowCloseButtonHint);
 }
 
 MainDialog::~MainDialog()
@@ -25,3 +34,21 @@ void MainDialog::closeEvent(QCloseEvent *event){
         event->ignore();
     }
 }
+void MainDialog::on_pb_file_clicked()
+{
+    ui->sw_page->setCurrentIndex(0);
+}
+void MainDialog::on_pb_transmit_clicked()
+{
+    ui->sw_page->setCurrentIndex(1);
+}
+void MainDialog::on_pb_share_clicked()
+{
+    ui->sw_page->setCurrentIndex(2);
+}
+
+
+
+
+
+

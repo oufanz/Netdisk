@@ -8,9 +8,8 @@ LoginDialog::LoginDialog(QWidget *parent) :
 {
     ui->setupUi(this);
     setWindowTitle("登录&注册");
-
-    //窗口默认在注册页面
-    ui->tw_page->setCurrentIndex(1);
+    //窗口默认在登录页面
+    ui->tw_page->setCurrentIndex(0);
 }
 
 LoginDialog::~LoginDialog()

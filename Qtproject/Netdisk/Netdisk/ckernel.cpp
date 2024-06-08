@@ -191,6 +191,8 @@ void CKernel::slot_dealLoginRs(unsigned int lSendIP, char *buf, int nlen)
             m_id=rs->name;
             m_name=rs->name;
             //获取该目录下的文件
+
+
         break;
     }
 }
