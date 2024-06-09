@@ -12,10 +12,14 @@
 #define NetMap( a ) m_netPackMap[ a - _DEF_PACK_BASE ]
 CKernel::CKernel(QObject *parent) : QObject(parent)
 {
+//    m_mainDialog = new MainDialog;// 创建 MainDialog 实例
+//    m_mainDialog->show();
+//    return;
     //建立协议表
     setNetPackMap();
     // 加载配置文件
     loadIniFile();
+
 #ifdef USE_SERVER
     m_tcpServer = new TcpServerMediator;
     connect(m_tcpServer,SIGNAL(SIG_ReadyData(uint,char*,int)),this,
