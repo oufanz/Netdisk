@@ -114,7 +114,7 @@ void CLogic::LoginRq(sock_fd clientfd ,char* szbuf,int nlen)
     if(!m_mapIDToUserInfo.find(id,info)){
         info =new UserInfo;
     }else{
-        //存在该用户，让其下线
+        //存在该用户，让其下线 todo
     }
     //赋值
     info->name=strName;
