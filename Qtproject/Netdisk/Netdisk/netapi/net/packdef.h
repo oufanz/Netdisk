@@ -5,7 +5,7 @@
 #define _DEF_BUFFER         (4096)
 #define _DEF_CONTENT_SIZE	(1024)
 #define _MAX_SIZE           (40)
-#define _MAX_PATH_SIZE         (260)
+#define _MAX_PATH_SIZE      (260)
 
 //自定义协议   先写协议头 再写协议结构
 //登录 注册 获取好友信息 添加好友 聊天 发文件 下线请求
