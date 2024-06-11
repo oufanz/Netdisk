@@ -15,6 +15,9 @@ public:
 public:
     //设置协议映射
     void setNetPackMap();
+    int getNumber(){
+        return (int)1e9;
+    }
     /************** 发送数据*********************/
     void SendData( sock_fd clientfd, char*szbuf, int nlen )
     {
@@ -27,7 +30,8 @@ public:
     void LoginRq(sock_fd clientfd, char*szbuf, int nlen);
     //处理上传文件
     void UploadFileRq(sock_fd clientfd ,char *szbuf,int nlen);
-
+    //处理文件块请求
+    void FileContentRq(sock_fd clientfd, char*szbuf, int nlen);
     /*******************************************/
 
 private:

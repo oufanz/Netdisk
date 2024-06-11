@@ -5,7 +5,7 @@ void CLogic::setNetPackMap()
     NetPackMap(_DEF_PACK_REGISTER_RQ)    = &CLogic::RegisterRq;
     NetPackMap(_DEF_PACK_LOGIN_RQ)       = &CLogic::LoginRq;
     NetPackMap(_DEF_PACK_UPLOAD_FILE_RQ)  = &CLogic::UploadFileRq;
-
+    NetPackMap(_DEF_PACK_FILE_CONTENT_RQ)  = &CLogic::FileContentRq;
 }
 
 #define _DEF_COUT_FUNC_    cout << "clientfd:"<< clientfd << __func__ << endl;
@@ -158,7 +158,7 @@ void CLogic::UploadFileRq(sock_fd clientfd, char *szbuf, int nlen)
         std::cout<<"file open fail"<<std::endl;
         return;
     }
-    int64_t user_time=rq->userid*1e9+rq->timestamp;
+    int64_t user_time=rq->userid*getNumber()+rq->timestamp;
     m_mapTimestampToFileInfo.insert(user_time,info);
     //map存储文件信息
     //*************************************数据库************************************//
@@ -188,7 +188,7 @@ void CLogic::UploadFileRq(sock_fd clientfd, char *szbuf, int nlen)
       }
     //写回复包
     STRU_UPLOAD_FILE_RS rs;
-    rs.fileid;
+    rs.fileid=info->fid;
     rs.result=1;
     rs.timestamp=rq->timestamp;
     rs.userid=rq->userid;
@@ -197,3 +197,52 @@ void CLogic::UploadFileRq(sock_fd clientfd, char *szbuf, int nlen)
 /*
  * 拆包->文件信息提取到Info存储到Map,读取ID->
  */
+void CLogic::FileContentRq(sock_fd clientfd, char *szbuf, int nlen)
+{
+    _DEF_COUT_FUNC_;
+    //拆包
+    STRU_FILE_CONTENT_RQ* rq = (STRU_FILE_CONTENT_RQ*)szbuf;
+    //获取文件信息
+    int64_t user_time = rq->userid*getNumber()+rq->timestamp;
+    FileInfo* info = nullptr;
+    //找到就赋值给info
+    if(!m_mapTimestampToFileInfo.find(user_time,info)){
+        std::cout<<"file not found"<<endl;
+        return;
+    }
+    STRU_FILE_CONTENT_RS rs;
+    //写入到文件中
+     int len = write(info->fileFd,rq->content,rq->len);
+     if(len!=rq->len){
+         //失败 跳回到读取之前
+         rs.result = 0;
+         //文件描述符跳回去
+         lseek(info->fileFd,-1*len,SEEK_CUR);
+     }else{
+         rs.result=1;
+         info->pos+=len;
+         //看是否到达末尾
+         if(info->pos>=info->size){
+             //是：关闭文件，回收Map结点
+             close(info->fileFd);
+             m_mapTimestampToFileInfo.erase(user_time);
+             delete info;
+             info=nullptr;
+             //更新数据库，表示文件上传完成，可以使用;
+             char sqlbuf[1000]="";
+             sprintf(sqlbuf,"update t_file set f_state = 1 where f_id = %d ;",rq->fileid);
+             bool res = m_sql->UpdataMysql(sqlbuf);
+            if(!res){
+                std::cout<<__func__<<"update fail:"<<sqlbuf<<endl;
+            }
+         }
+     }
+     rs.fileid=rq->fileid;
+     rs.len=rq->len;
+     rs.timestamp=rq->timestamp;
+     rs.userid=rq->userid;
+     //返回结果
+     SendData(clientfd,(char*)&rs,sizeof rs);
+
+}
+
