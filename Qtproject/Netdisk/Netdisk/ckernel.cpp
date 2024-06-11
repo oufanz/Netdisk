@@ -45,8 +45,9 @@ CKernel::CKernel(QObject *parent) : QObject(parent)
     m_tcpClient->OpenNet(m_ip.toStdString().c_str(),m_port.toInt());
     m_loginDialog->show();
 #endif
+#ifdef TEST
     m_mainDialog->show();
-
+#endif
 #ifdef USE_SERVER
     //测试对服务器发送数据
 //    char strBuf[100]= "hello server";
@@ -73,7 +74,7 @@ CKernel::CKernel(QObject *parent) : QObject(parent)
 void CKernel::loadIniFile()
 {
     //默认值
-    m_ip = "192.168.172.2";
+    m_ip = "192.168.172.128";
     m_port = "8004";
 
     //获取exe目录
@@ -111,7 +112,8 @@ void CKernel::setNetPackMap()
     //作用：通过来的协议头过来找到对应处理的函数指针
     NetMap(_DEF_PACK_LOGIN_RS) = &CKernel::slot_dealLoginRs;
     NetMap(_DEF_PACK_REGISTER_RS) = &CKernel::slot_dealRegisterRs;
-
+    NetMap(_DEF_PACK_UPLOAD_FILE_RS) = &CKernel::slot_dealUploaFiledRs;
+    NetMap(_DEF_PACK_FILE_CONTENT_RS) = &CKernel::slot_dealFileContentRs;
 
 }
 //生成MD5函数：传入string，调用toString()得到MD5加密结果
@@ -303,6 +305,66 @@ void CKernel::slot_dealRegisterRs(unsigned int lSendIP, char *buf, int nlen)
             QMessageBox::about(m_loginDialog,"提示","注册成功!");
         break;
     }
+}
+//上传文件请求获得的回复的处理
+void CKernel::slot_dealUploaFiledRs(unsigned int lSendIP, char *buf, int nlen)
+{
+    //拆包
+    STRU_UPLOAD_FILE_RS* rs =(STRU_UPLOAD_FILE_RS*)buf;
+    //看看是否上传成功
+    if(rs->result!=1){
+        qDebug()<<"上传失败";return;
+    }
+    //获取文件信息
+    if(m_mapTimestampToFileInfo.count(rs->timestamp)==0){
+        qDebug()<<"not found!";
+        return;
+    }
+    //操作对象
+    FileInfo&info = m_mapTimestampToFileInfo[rs->timestamp];
+    //更新fileid
+    info.fileid=rs->fileid;
+
+    //发送文件块内容请求
+    STRU_FILE_CONTENT_RQ rq;
+    rq.fileid=rs->fileid;
+    rq.timestamp = rs->timestamp;
+    rq.userid = m_id;
+    rq.len = fread(rq.content,1,_DEF_BUFFER,info.pFile);
+    SendData((char*)&rq,sizeof(rq));//发送文件块
+}
+
+void CKernel::slot_dealFileContentRs(unsigned int lSendIP, char *buf, int nlen)
+{
+    //拆包
+    STRU_FILE_CONTENT_RS *rs = (STRU_FILE_CONTENT_RS*)buf;
+    //找文件信息结构体
+    if(!m_mapTimestampToFileInfo.count(rs->timestamp)){
+        qDebug()<<"file not found";
+        return;
+    }
+    FileInfo&info = m_mapTimestampToFileInfo[rs->timestamp];
+    if(!rs->result){
+        qDebug()<<"当前包上传失败";
+        //跳回去,重新上传即可
+        fseek(info.pFile,-1*rs->len,SEEK_CUR);
+    }else{
+        info.pos += rs->len;
+    }
+    //判断是否结束;
+    if(info.pos>=info.size){
+        fclose(info.pFile);
+        fclose(info.pFile);
+        m_mapTimestampToFileInfo.erase(rs->timestamp);
+        return;
+    }
+    //没发送完，继续发文件块;
+    STRU_FILE_CONTENT_RQ rq;
+    rq.fileid = rs->fileid;
+    rq.timestamp=rs->timestamp;
+    rq.userid=m_id;
+    rq.len=fread(rq.content,1,_DEF_BUFFER,info.pFile);
+    SendData((char*)&rq,sizeof(rq));
 }
 
 

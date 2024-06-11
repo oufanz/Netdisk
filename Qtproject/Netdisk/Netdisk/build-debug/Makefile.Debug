@@ -448,9 +448,16 @@ debug/moc_ckernel.cpp: ../ckernel.h \
 		D:/Qt/5.12.11/mingw73_32/include/QtGui/qvector2d.h \
 		D:/Qt/5.12.11/mingw73_32/include/QtGui/qtouchdevice.h \
 		D:/Qt/5.12.11/mingw73_32/include/QtGui/QCloseEvent \
+		D:/Qt/5.12.11/mingw73_32/include/QtWidgets/QMenu \
+		D:/Qt/5.12.11/mingw73_32/include/QtWidgets/qmenu.h \
+		D:/Qt/5.12.11/mingw73_32/include/QtGui/qicon.h \
+		D:/Qt/5.12.11/mingw73_32/include/QtWidgets/qaction.h \
+		D:/Qt/5.12.11/mingw73_32/include/QtWidgets/qactiongroup.h \
 		../netapi/mediator/INetMediator.h \
 		../netapi/net/packdef.h \
 		../logindialog.h \
+		../common.h \
+		D:/Qt/5.12.11/mingw73_32/include/QtCore/QString \
 		debug/moc_predefs.h \
 		D:/Qt/5.12.11/mingw73_32/bin/moc.exe
 	D:\Qt\5.12.11\mingw73_32\bin\moc.exe $(DEFINES) --include E:/Github_project/Netdisk/Qtproject/Netdisk/Netdisk/build-debug/debug/moc_predefs.h -ID:/Qt/5.12.11/mingw73_32/mkspecs/win32-g++ -IE:/Github_project/Netdisk/Qtproject/Netdisk/Netdisk -IE:/Github_project/Netdisk/Qtproject/Netdisk/Netdisk/netapi/net -IE:/Github_project/Netdisk/Qtproject/Netdisk/Netdisk/netapi/mediator -IE:/Github_project/Netdisk/Qtproject/Netdisk/Netdisk/netapi -IE:/Github_project/Netdisk/Qtproject/Netdisk/Netdisk/md5 -ID:/Qt/5.12.11/mingw73_32/include -ID:/Qt/5.12.11/mingw73_32/include/QtWidgets -ID:/Qt/5.12.11/mingw73_32/include/QtGui -ID:/Qt/5.12.11/mingw73_32/include/QtANGLE -ID:/Qt/5.12.11/mingw73_32/include/QtNetwork -ID:/Qt/5.12.11/mingw73_32/include/QtCore -I. -ID:/Qt/Tools/mingw730_32/lib/gcc/i686-w64-mingw32/7.3.0/include/c++ -ID:/Qt/Tools/mingw730_32/lib/gcc/i686-w64-mingw32/7.3.0/include/c++/i686-w64-mingw32 -ID:/Qt/Tools/mingw730_32/lib/gcc/i686-w64-mingw32/7.3.0/include/c++/backward -ID:/Qt/Tools/mingw730_32/lib/gcc/i686-w64-mingw32/7.3.0/include -ID:/Qt/Tools/mingw730_32/lib/gcc/i686-w64-mingw32/7.3.0/include-fixed -ID:/Qt/Tools/mingw730_32/i686-w64-mingw32/include ..\ckernel.h -o debug\moc_ckernel.cpp
@@ -670,6 +677,11 @@ debug/moc_maindialog.cpp: ../maindialog.h \
 		D:/Qt/5.12.11/mingw73_32/include/QtGui/qvector2d.h \
 		D:/Qt/5.12.11/mingw73_32/include/QtGui/qtouchdevice.h \
 		D:/Qt/5.12.11/mingw73_32/include/QtGui/QCloseEvent \
+		D:/Qt/5.12.11/mingw73_32/include/QtWidgets/QMenu \
+		D:/Qt/5.12.11/mingw73_32/include/QtWidgets/qmenu.h \
+		D:/Qt/5.12.11/mingw73_32/include/QtGui/qicon.h \
+		D:/Qt/5.12.11/mingw73_32/include/QtWidgets/qaction.h \
+		D:/Qt/5.12.11/mingw73_32/include/QtWidgets/qactiongroup.h \
 		debug/moc_predefs.h \
 		D:/Qt/5.12.11/mingw73_32/bin/moc.exe
 	D:\Qt\5.12.11\mingw73_32\bin\moc.exe $(DEFINES) --include E:/Github_project/Netdisk/Qtproject/Netdisk/Netdisk/build-debug/debug/moc_predefs.h -ID:/Qt/5.12.11/mingw73_32/mkspecs/win32-g++ -IE:/Github_project/Netdisk/Qtproject/Netdisk/Netdisk -IE:/Github_project/Netdisk/Qtproject/Netdisk/Netdisk/netapi/net -IE:/Github_project/Netdisk/Qtproject/Netdisk/Netdisk/netapi/mediator -IE:/Github_project/Netdisk/Qtproject/Netdisk/Netdisk/netapi -IE:/Github_project/Netdisk/Qtproject/Netdisk/Netdisk/md5 -ID:/Qt/5.12.11/mingw73_32/include -ID:/Qt/5.12.11/mingw73_32/include/QtWidgets -ID:/Qt/5.12.11/mingw73_32/include/QtGui -ID:/Qt/5.12.11/mingw73_32/include/QtANGLE -ID:/Qt/5.12.11/mingw73_32/include/QtNetwork -ID:/Qt/5.12.11/mingw73_32/include/QtCore -I. -ID:/Qt/Tools/mingw730_32/lib/gcc/i686-w64-mingw32/7.3.0/include/c++ -ID:/Qt/Tools/mingw730_32/lib/gcc/i686-w64-mingw32/7.3.0/include/c++/i686-w64-mingw32 -ID:/Qt/Tools/mingw730_32/lib/gcc/i686-w64-mingw32/7.3.0/include/c++/backward -ID:/Qt/Tools/mingw730_32/lib/gcc/i686-w64-mingw32/7.3.0/include -ID:/Qt/Tools/mingw730_32/lib/gcc/i686-w64-mingw32/7.3.0/include-fixed -ID:/Qt/Tools/mingw730_32/i686-w64-mingw32/include ..\maindialog.h -o debug\moc_maindialog.cpp
@@ -1201,9 +1213,16 @@ debug/ckernel.o: ../ckernel.cpp ../ckernel.h \
 		D:/Qt/5.12.11/mingw73_32/include/QtGui/qvector2d.h \
 		D:/Qt/5.12.11/mingw73_32/include/QtGui/qtouchdevice.h \
 		D:/Qt/5.12.11/mingw73_32/include/QtGui/QCloseEvent \
+		D:/Qt/5.12.11/mingw73_32/include/QtWidgets/QMenu \
+		D:/Qt/5.12.11/mingw73_32/include/QtWidgets/qmenu.h \
+		D:/Qt/5.12.11/mingw73_32/include/QtGui/qicon.h \
+		D:/Qt/5.12.11/mingw73_32/include/QtWidgets/qaction.h \
+		D:/Qt/5.12.11/mingw73_32/include/QtWidgets/qactiongroup.h \
 		../netapi/mediator/INetMediator.h \
 		../netapi/net/packdef.h \
 		../logindialog.h \
+		../common.h \
+		D:/Qt/5.12.11/mingw73_32/include/QtCore/QString \
 		D:/Qt/5.12.11/mingw73_32/include/QtCore/QDebug \
 		D:/Qt/5.12.11/mingw73_32/include/QtCore/QCoreApplication \
 		D:/Qt/5.12.11/mingw73_32/include/QtCore/qcoreapplication.h \
@@ -1216,7 +1235,11 @@ debug/ckernel.o: ../ckernel.cpp ../ckernel.h \
 		../netapi/mediator/TcpServerMediator.h \
 		D:/Qt/5.12.11/mingw73_32/include/QtWidgets/QMessageBox \
 		D:/Qt/5.12.11/mingw73_32/include/QtWidgets/qmessagebox.h \
-		../md5/md5.h
+		D:/Qt/5.12.11/mingw73_32/include/QtCore/QDateTime \
+		D:/Qt/5.12.11/mingw73_32/include/QtCore/qdatetime.h \
+		../md5/md5.h \
+		D:/Qt/5.12.11/mingw73_32/include/QtCore/QTextCodec \
+		D:/Qt/5.12.11/mingw73_32/include/QtCore/qtextcodec.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o debug\ckernel.o ..\ckernel.cpp
 
 debug/logindialog.o: ../logindialog.cpp ../logindialog.h \
@@ -1465,6 +1488,11 @@ debug/main.o: ../main.cpp ../maindialog.h \
 		D:/Qt/5.12.11/mingw73_32/include/QtGui/qvector2d.h \
 		D:/Qt/5.12.11/mingw73_32/include/QtGui/qtouchdevice.h \
 		D:/Qt/5.12.11/mingw73_32/include/QtGui/QCloseEvent \
+		D:/Qt/5.12.11/mingw73_32/include/QtWidgets/QMenu \
+		D:/Qt/5.12.11/mingw73_32/include/QtWidgets/qmenu.h \
+		D:/Qt/5.12.11/mingw73_32/include/QtGui/qicon.h \
+		D:/Qt/5.12.11/mingw73_32/include/QtWidgets/qaction.h \
+		D:/Qt/5.12.11/mingw73_32/include/QtWidgets/qactiongroup.h \
 		D:/Qt/5.12.11/mingw73_32/include/QtWidgets/QApplication \
 		D:/Qt/5.12.11/mingw73_32/include/QtWidgets/qapplication.h \
 		D:/Qt/5.12.11/mingw73_32/include/QtCore/qcoreapplication.h \
@@ -1476,7 +1504,9 @@ debug/main.o: ../main.cpp ../maindialog.h \
 		D:/Qt/5.12.11/mingw73_32/include/QtCore/QObject \
 		../netapi/mediator/INetMediator.h \
 		../netapi/net/packdef.h \
-		../logindialog.h
+		../logindialog.h \
+		../common.h \
+		D:/Qt/5.12.11/mingw73_32/include/QtCore/QString
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o debug\main.o ..\main.cpp
 
 debug/maindialog.o: ../maindialog.cpp ../maindialog.h \
@@ -1585,10 +1615,14 @@ debug/maindialog.o: ../maindialog.cpp ../maindialog.h \
 		D:/Qt/5.12.11/mingw73_32/include/QtGui/qvector2d.h \
 		D:/Qt/5.12.11/mingw73_32/include/QtGui/qtouchdevice.h \
 		D:/Qt/5.12.11/mingw73_32/include/QtGui/QCloseEvent \
+		D:/Qt/5.12.11/mingw73_32/include/QtWidgets/QMenu \
+		D:/Qt/5.12.11/mingw73_32/include/QtWidgets/qmenu.h \
+		D:/Qt/5.12.11/mingw73_32/include/QtGui/qicon.h \
+		D:/Qt/5.12.11/mingw73_32/include/QtWidgets/qaction.h \
+		D:/Qt/5.12.11/mingw73_32/include/QtWidgets/qactiongroup.h \
 		ui_maindialog.h \
 		D:/Qt/5.12.11/mingw73_32/include/QtCore/QVariant \
 		D:/Qt/5.12.11/mingw73_32/include/QtGui/QIcon \
-		D:/Qt/5.12.11/mingw73_32/include/QtGui/qicon.h \
 		D:/Qt/5.12.11/mingw73_32/include/QtWidgets/QApplication \
 		D:/Qt/5.12.11/mingw73_32/include/QtWidgets/qapplication.h \
 		D:/Qt/5.12.11/mingw73_32/include/QtCore/qcoreapplication.h \
@@ -1634,7 +1668,12 @@ debug/maindialog.o: ../maindialog.cpp ../maindialog.h \
 		D:/Qt/5.12.11/mingw73_32/include/QtWidgets/QVBoxLayout \
 		D:/Qt/5.12.11/mingw73_32/include/QtWidgets/QWidget \
 		D:/Qt/5.12.11/mingw73_32/include/QtWidgets/QMessageBox \
-		D:/Qt/5.12.11/mingw73_32/include/QtWidgets/qmessagebox.h
+		D:/Qt/5.12.11/mingw73_32/include/QtWidgets/qmessagebox.h \
+		D:/Qt/5.12.11/mingw73_32/include/QtCore/QDebug \
+		D:/Qt/5.12.11/mingw73_32/include/QtWidgets/QFileDialog \
+		D:/Qt/5.12.11/mingw73_32/include/QtWidgets/qfiledialog.h \
+		D:/Qt/5.12.11/mingw73_32/include/QtCore/qdir.h \
+		D:/Qt/5.12.11/mingw73_32/include/QtCore/qfileinfo.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o debug\maindialog.o ..\maindialog.cpp
 
 debug/qrc_resourse.o: debug/qrc_resourse.cpp 

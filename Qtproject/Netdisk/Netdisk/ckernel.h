@@ -13,7 +13,7 @@ class CKernel;
 //类成员函数指针
 typedef void(CKernel::*PFUN) (unsigned int lSendIP, char *buf, int nlen);
 //#define USE_SERVER //当前是服务端
-#define TEST
+//#define TEST
 class CKernel : public QObject
 {
     Q_OBJECT
@@ -44,11 +44,12 @@ private slots:
     //普通槽函数
     void slot_destroy();
     void slot_uploadFile(QString path,QString dir);
-
     //网络响应槽函数
     void slot_dealClientData(unsigned int lSendIP, char *buf, int nlen);
     void slot_dealLoginRs(unsigned int lSendIP, char *buf, int nlen);
     void slot_dealRegisterRs(unsigned int lSendIP, char *buf, int nlen);
+    void slot_dealUploaFiledRs(unsigned int lSendIP, char *buf, int nlen);
+    void slot_dealFileContentRs(unsigned int lSendIP, char *buf, int nlen);
 #ifdef USE_SERVER
     void slot_dealServerData(unsigned int lSendIP, char *buf, int nlen);
 #endif
