@@ -25,6 +25,8 @@ public:
     void RegisterRq(sock_fd clientfd, char*szbuf, int nlen);
     //登录
     void LoginRq(sock_fd clientfd, char*szbuf, int nlen);
+    //处理上传文件
+    void UploadFileRq(sock_fd clientfd ,char *szbuf,int nlen);
 
     /*******************************************/
 
@@ -33,6 +35,8 @@ private:
     CMysql * m_sql;
     Block_Epoll_Net * m_tcp;
     MyMap<int ,UserInfo*>m_mapIDToUserInfo;
+    //key:userid*1e9+timestamp value 文件信息
+    MyMap<int64_t,FileInfo*>m_mapTimestampToFileInfo;
 };
 
 #endif // CLOGIC_H

@@ -1,9 +1,11 @@
 #include "clogic.h"
-#define DEF_PATH "/home/oufan/Gitproject/Netdisk/"
+#define DEF_PATH "/home/oufan/Gitproject/Netdisk/userid/"
 void CLogic::setNetPackMap()
 {
     NetPackMap(_DEF_PACK_REGISTER_RQ)    = &CLogic::RegisterRq;
     NetPackMap(_DEF_PACK_LOGIN_RQ)       = &CLogic::LoginRq;
+    NetPackMap(_DEF_PACK_UPLOAD_FILE_RQ)  = &CLogic::UploadFileRq;
+
 }
 
 #define _DEF_COUT_FUNC_    cout << "clientfd:"<< clientfd << __func__ << endl;
@@ -69,7 +71,7 @@ void CLogic::RegisterRq(sock_fd clientfd,char* szbuf,int nlen)
     lstRes.pop_front();
 
     char pathbuf[_MAX_PATH_SIZE] = "";
-    sprintf(pathbuf,"%s/userid/%d/",DEF_PATH,id);
+    sprintf(pathbuf,"%s%d/",DEF_PATH,id);
     //创建路径
     umask(0);
     mkdir(pathbuf,0777);//创建目   录，并且设置权限0777
@@ -125,3 +127,73 @@ void CLogic::LoginRq(sock_fd clientfd ,char* szbuf,int nlen)
 //    rs.m_lResult = password_error;
     SendData( clientfd , (char*)&rs , sizeof rs );
 }
+
+void CLogic::UploadFileRq(sock_fd clientfd, char *szbuf, int nlen)
+{
+    _DEF_COUT_FUNC_;
+    //拆包
+    STRU_UPLOAD_FILE_RQ *rq=(STRU_UPLOAD_FILE_RQ *)szbuf;
+    std::cout<<rq->fileName<<endl;
+
+    //查看是否妙传 todo
+    //不是秒传
+
+    //文件信息创建，打开文件
+    FileInfo* info =new FileInfo;
+    char strpath[1000]="";
+    sprintf(strpath,"%s%d%s%s",DEF_PATH,rq->userid,rq->dir,rq->md5);//+userid+dir+name-md5;
+    //printf("%s",strpath);
+    //通过绝对路径打开文件，文件名字是MD5（防止文件被覆盖）
+    info->absolutePath=strpath;
+    info->dir=rq->dir;
+    info->md5=rq->md5;
+    info->size=rq->size;
+    info->time=rq->time;
+    info->type=rq->type;
+    //info->fid=
+    //使用Linux文件io操作;
+    //绝对路径 +  方式：创建+权限
+    info->fileFd=open(strpath,O_CREAT|O_WRONLY|O_TRUNC,00777);
+    if(info->fileFd<0){
+        std::cout<<"file open fail"<<std::endl;
+        return;
+    }
+    int64_t user_time=rq->userid*1e9+rq->timestamp;
+    m_mapTimestampToFileInfo.insert(user_time,info);
+    //map存储文件信息
+    //*************************************数据库************************************//
+    //数据库记录：插入文件信息（引用计数），插入用户文件关系，查文件id'
+    char sqlbuf[1000] = "";
+    sprintf(sqlbuf,"insert into t_file ( f_size , f_path , f_MD5 , f_count , f_state , f_type ) values ( %d , '%s' , '%s' ,0 , 0 , 'file');",rq->size,strpath,rq->md5);
+     bool res=m_sql->UpdataMysql(sqlbuf);
+     if(!res){
+         printf("insert fail: %s\n",sqlbuf);
+     }
+     sprintf(sqlbuf,"select f_id from t_file where f_path = '%s' and f_MD5='%s' ",strpath,rq->md5);
+     list<string>lstRes;
+     res = m_sql->SelectMysql(sqlbuf,1,lstRes);
+     if(!res){
+         printf("Select fail:%s\n",sqlbuf);
+     }
+     if(lstRes.size()>0){
+         info->fid = stoi(lstRes.front());
+     }
+     lstRes.clear();
+     //插入用户文件关系表
+      sprintf(sqlbuf,"insert into t_user_file ( u_id , f_id , f_dir , f_name , f_uploadtime ) values( %d , %d , '%s' , '%s' , '%s' ); "
+            ,rq->userid,info->fid,rq->dir,rq->fileName,rq->time);
+      res=m_sql->UpdataMysql(sqlbuf);
+      if(!res){
+          printf("update fail:%s\n",sqlbuf);
+      }
+    //写回复包
+    STRU_UPLOAD_FILE_RS rs;
+    rs.fileid;
+    rs.result=1;
+    rs.timestamp=rq->timestamp;
+    rs.userid=rq->userid;
+    SendData(clientfd,(char*)&rs,sizeof(rs));
+}
+/*
+ * 拆包->文件信息提取到Info存储到Map,读取ID->
+ */
