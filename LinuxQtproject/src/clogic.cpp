@@ -68,7 +68,7 @@ void CLogic::RegisterRq(sock_fd clientfd,char* szbuf,int nlen)
     int id = stoi(lstRes.front());
     lstRes.pop_front();
 
-    char pathbuf[_MAX_PATH] = "";
+    char pathbuf[_MAX_PATH_SIZE] = "";
     sprintf(pathbuf,"%s/userid/%d/",DEF_PATH,id);
     //创建路径
     umask(0);
