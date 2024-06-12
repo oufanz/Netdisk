@@ -296,16 +296,22 @@ public:
         verticalLayout_6->setObjectName(QString::fromUtf8("verticalLayout_6"));
         verticalLayout_6->setContentsMargins(0, 0, 0, 0);
         table_upload = new QTableWidget(tab_upload);
-        if (table_upload->columnCount() < 3)
-            table_upload->setColumnCount(3);
+        if (table_upload->columnCount() < 6)
+            table_upload->setColumnCount(6);
         QTableWidgetItem *__qtablewidgetitem3 = new QTableWidgetItem();
         table_upload->setHorizontalHeaderItem(0, __qtablewidgetitem3);
         QTableWidgetItem *__qtablewidgetitem4 = new QTableWidgetItem();
         table_upload->setHorizontalHeaderItem(1, __qtablewidgetitem4);
         QTableWidgetItem *__qtablewidgetitem5 = new QTableWidgetItem();
         table_upload->setHorizontalHeaderItem(2, __qtablewidgetitem5);
+        QTableWidgetItem *__qtablewidgetitem6 = new QTableWidgetItem();
+        table_upload->setHorizontalHeaderItem(3, __qtablewidgetitem6);
+        QTableWidgetItem *__qtablewidgetitem7 = new QTableWidgetItem();
+        table_upload->setHorizontalHeaderItem(4, __qtablewidgetitem7);
+        QTableWidgetItem *__qtablewidgetitem8 = new QTableWidgetItem();
+        table_upload->setHorizontalHeaderItem(5, __qtablewidgetitem8);
         table_upload->setObjectName(QString::fromUtf8("table_upload"));
-        table_upload->horizontalHeader()->setDefaultSectionSize(180);
+        table_upload->horizontalHeader()->setDefaultSectionSize(110);
         table_upload->horizontalHeader()->setProperty("showSortIndicator", QVariant(true));
         table_upload->horizontalHeader()->setStretchLastSection(true);
         table_upload->verticalHeader()->setVisible(false);
@@ -323,12 +329,12 @@ public:
         table_download = new QTableWidget(tab_download);
         if (table_download->columnCount() < 3)
             table_download->setColumnCount(3);
-        QTableWidgetItem *__qtablewidgetitem6 = new QTableWidgetItem();
-        table_download->setHorizontalHeaderItem(0, __qtablewidgetitem6);
-        QTableWidgetItem *__qtablewidgetitem7 = new QTableWidgetItem();
-        table_download->setHorizontalHeaderItem(1, __qtablewidgetitem7);
-        QTableWidgetItem *__qtablewidgetitem8 = new QTableWidgetItem();
-        table_download->setHorizontalHeaderItem(2, __qtablewidgetitem8);
+        QTableWidgetItem *__qtablewidgetitem9 = new QTableWidgetItem();
+        table_download->setHorizontalHeaderItem(0, __qtablewidgetitem9);
+        QTableWidgetItem *__qtablewidgetitem10 = new QTableWidgetItem();
+        table_download->setHorizontalHeaderItem(1, __qtablewidgetitem10);
+        QTableWidgetItem *__qtablewidgetitem11 = new QTableWidgetItem();
+        table_download->setHorizontalHeaderItem(2, __qtablewidgetitem11);
         table_download->setObjectName(QString::fromUtf8("table_download"));
         table_download->horizontalHeader()->setDefaultSectionSize(180);
         table_download->horizontalHeader()->setProperty("showSortIndicator", QVariant(true));
@@ -346,16 +352,18 @@ public:
         verticalLayout_8->setObjectName(QString::fromUtf8("verticalLayout_8"));
         verticalLayout_8->setContentsMargins(0, 0, 0, 0);
         table_complete = new QTableWidget(tab_complete);
-        if (table_complete->columnCount() < 3)
-            table_complete->setColumnCount(3);
-        QTableWidgetItem *__qtablewidgetitem9 = new QTableWidgetItem();
-        table_complete->setHorizontalHeaderItem(0, __qtablewidgetitem9);
-        QTableWidgetItem *__qtablewidgetitem10 = new QTableWidgetItem();
-        table_complete->setHorizontalHeaderItem(1, __qtablewidgetitem10);
-        QTableWidgetItem *__qtablewidgetitem11 = new QTableWidgetItem();
-        table_complete->setHorizontalHeaderItem(2, __qtablewidgetitem11);
+        if (table_complete->columnCount() < 4)
+            table_complete->setColumnCount(4);
+        QTableWidgetItem *__qtablewidgetitem12 = new QTableWidgetItem();
+        table_complete->setHorizontalHeaderItem(0, __qtablewidgetitem12);
+        QTableWidgetItem *__qtablewidgetitem13 = new QTableWidgetItem();
+        table_complete->setHorizontalHeaderItem(1, __qtablewidgetitem13);
+        QTableWidgetItem *__qtablewidgetitem14 = new QTableWidgetItem();
+        table_complete->setHorizontalHeaderItem(2, __qtablewidgetitem14);
+        QTableWidgetItem *__qtablewidgetitem15 = new QTableWidgetItem();
+        table_complete->setHorizontalHeaderItem(3, __qtablewidgetitem15);
         table_complete->setObjectName(QString::fromUtf8("table_complete"));
-        table_complete->horizontalHeader()->setDefaultSectionSize(180);
+        table_complete->horizontalHeader()->setDefaultSectionSize(165);
         table_complete->horizontalHeader()->setProperty("showSortIndicator", QVariant(true));
         table_complete->horizontalHeader()->setStretchLastSection(true);
         table_complete->verticalHeader()->setVisible(false);
@@ -386,12 +394,12 @@ public:
         table_share = new QTableWidget(tab_myshare);
         if (table_share->columnCount() < 3)
             table_share->setColumnCount(3);
-        QTableWidgetItem *__qtablewidgetitem12 = new QTableWidgetItem();
-        table_share->setHorizontalHeaderItem(0, __qtablewidgetitem12);
-        QTableWidgetItem *__qtablewidgetitem13 = new QTableWidgetItem();
-        table_share->setHorizontalHeaderItem(1, __qtablewidgetitem13);
-        QTableWidgetItem *__qtablewidgetitem14 = new QTableWidgetItem();
-        table_share->setHorizontalHeaderItem(2, __qtablewidgetitem14);
+        QTableWidgetItem *__qtablewidgetitem16 = new QTableWidgetItem();
+        table_share->setHorizontalHeaderItem(0, __qtablewidgetitem16);
+        QTableWidgetItem *__qtablewidgetitem17 = new QTableWidgetItem();
+        table_share->setHorizontalHeaderItem(1, __qtablewidgetitem17);
+        QTableWidgetItem *__qtablewidgetitem18 = new QTableWidgetItem();
+        table_share->setHorizontalHeaderItem(2, __qtablewidgetitem18);
         table_share->setObjectName(QString::fromUtf8("table_share"));
         table_share->setFont(font2);
         table_share->horizontalHeader()->setDefaultSectionSize(180);
@@ -415,8 +423,8 @@ public:
 
         retranslateUi(MainDialog);
 
-        sw_page->setCurrentIndex(0);
-        tw_transmit->setCurrentIndex(0);
+        sw_page->setCurrentIndex(1);
+        tw_transmit->setCurrentIndex(2);
         tw_share->setCurrentIndex(0);
 
 
@@ -446,30 +454,34 @@ public:
         QTableWidgetItem *___qtablewidgetitem3 = table_upload->horizontalHeaderItem(0);
         ___qtablewidgetitem3->setText(QApplication::translate("MainDialog", "\346\226\207\344\273\266", nullptr));
         QTableWidgetItem *___qtablewidgetitem4 = table_upload->horizontalHeaderItem(1);
-        ___qtablewidgetitem4->setText(QApplication::translate("MainDialog", "\344\277\256\346\224\271\346\227\266\351\227\264", nullptr));
+        ___qtablewidgetitem4->setText(QApplication::translate("MainDialog", "\345\244\247\345\260\217", nullptr));
         QTableWidgetItem *___qtablewidgetitem5 = table_upload->horizontalHeaderItem(2);
-        ___qtablewidgetitem5->setText(QApplication::translate("MainDialog", "\345\244\247\345\260\217", nullptr));
+        ___qtablewidgetitem5->setText(QApplication::translate("MainDialog", "\346\227\266\351\227\264", nullptr));
+        QTableWidgetItem *___qtablewidgetitem6 = table_upload->horizontalHeaderItem(3);
+        ___qtablewidgetitem6->setText(QApplication::translate("MainDialog", "\351\200\237\347\216\207", nullptr));
+        QTableWidgetItem *___qtablewidgetitem7 = table_upload->horizontalHeaderItem(4);
+        ___qtablewidgetitem7->setText(QApplication::translate("MainDialog", "\350\277\233\345\272\246", nullptr));
         tw_transmit->setTabText(tw_transmit->indexOf(tab_upload), QApplication::translate("MainDialog", "\344\270\212\344\274\240\344\270\255", nullptr));
-        QTableWidgetItem *___qtablewidgetitem6 = table_download->horizontalHeaderItem(0);
-        ___qtablewidgetitem6->setText(QApplication::translate("MainDialog", "\346\226\207\344\273\266", nullptr));
-        QTableWidgetItem *___qtablewidgetitem7 = table_download->horizontalHeaderItem(1);
-        ___qtablewidgetitem7->setText(QApplication::translate("MainDialog", "\344\277\256\346\224\271\346\227\266\351\227\264", nullptr));
-        QTableWidgetItem *___qtablewidgetitem8 = table_download->horizontalHeaderItem(2);
-        ___qtablewidgetitem8->setText(QApplication::translate("MainDialog", "\345\244\247\345\260\217", nullptr));
+        QTableWidgetItem *___qtablewidgetitem8 = table_download->horizontalHeaderItem(0);
+        ___qtablewidgetitem8->setText(QApplication::translate("MainDialog", "\346\226\207\344\273\266", nullptr));
+        QTableWidgetItem *___qtablewidgetitem9 = table_download->horizontalHeaderItem(1);
+        ___qtablewidgetitem9->setText(QApplication::translate("MainDialog", "\346\227\266\351\227\264", nullptr));
+        QTableWidgetItem *___qtablewidgetitem10 = table_download->horizontalHeaderItem(2);
+        ___qtablewidgetitem10->setText(QApplication::translate("MainDialog", "\345\244\247\345\260\217", nullptr));
         tw_transmit->setTabText(tw_transmit->indexOf(tab_download), QApplication::translate("MainDialog", "\344\270\213\350\275\275\344\270\255", nullptr));
-        QTableWidgetItem *___qtablewidgetitem9 = table_complete->horizontalHeaderItem(0);
-        ___qtablewidgetitem9->setText(QApplication::translate("MainDialog", "\346\226\207\344\273\266", nullptr));
-        QTableWidgetItem *___qtablewidgetitem10 = table_complete->horizontalHeaderItem(1);
-        ___qtablewidgetitem10->setText(QApplication::translate("MainDialog", "\344\277\256\346\224\271\346\227\266\351\227\264", nullptr));
-        QTableWidgetItem *___qtablewidgetitem11 = table_complete->horizontalHeaderItem(2);
-        ___qtablewidgetitem11->setText(QApplication::translate("MainDialog", "\345\244\247\345\260\217", nullptr));
+        QTableWidgetItem *___qtablewidgetitem11 = table_complete->horizontalHeaderItem(0);
+        ___qtablewidgetitem11->setText(QApplication::translate("MainDialog", "\346\226\207\344\273\266", nullptr));
+        QTableWidgetItem *___qtablewidgetitem12 = table_complete->horizontalHeaderItem(1);
+        ___qtablewidgetitem12->setText(QApplication::translate("MainDialog", "\345\244\247\345\260\217", nullptr));
+        QTableWidgetItem *___qtablewidgetitem13 = table_complete->horizontalHeaderItem(2);
+        ___qtablewidgetitem13->setText(QApplication::translate("MainDialog", "\346\227\266\351\227\264", nullptr));
         tw_transmit->setTabText(tw_transmit->indexOf(tab_complete), QApplication::translate("MainDialog", "\345\267\262\345\256\214\346\210\220", nullptr));
-        QTableWidgetItem *___qtablewidgetitem12 = table_share->horizontalHeaderItem(0);
-        ___qtablewidgetitem12->setText(QApplication::translate("MainDialog", "\346\226\207\344\273\266", nullptr));
-        QTableWidgetItem *___qtablewidgetitem13 = table_share->horizontalHeaderItem(1);
-        ___qtablewidgetitem13->setText(QApplication::translate("MainDialog", "\344\277\256\346\224\271\346\227\266\351\227\264", nullptr));
-        QTableWidgetItem *___qtablewidgetitem14 = table_share->horizontalHeaderItem(2);
-        ___qtablewidgetitem14->setText(QApplication::translate("MainDialog", "\345\244\247\345\260\217", nullptr));
+        QTableWidgetItem *___qtablewidgetitem14 = table_share->horizontalHeaderItem(0);
+        ___qtablewidgetitem14->setText(QApplication::translate("MainDialog", "\346\226\207\344\273\266", nullptr));
+        QTableWidgetItem *___qtablewidgetitem15 = table_share->horizontalHeaderItem(1);
+        ___qtablewidgetitem15->setText(QApplication::translate("MainDialog", "\344\277\256\346\224\271\346\227\266\351\227\264", nullptr));
+        QTableWidgetItem *___qtablewidgetitem16 = table_share->horizontalHeaderItem(2);
+        ___qtablewidgetitem16->setText(QApplication::translate("MainDialog", "\345\244\247\345\260\217", nullptr));
         tw_share->setTabText(tw_share->indexOf(tab_myshare), QApplication::translate("MainDialog", "\346\210\221\347\232\204\345\210\206\344\272\253", nullptr));
     } // retranslateUi
 

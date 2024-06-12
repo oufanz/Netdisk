@@ -280,7 +280,7 @@
       <item>
        <widget class="QStackedWidget" name="sw_page">
         <property name="currentIndex">
-         <number>0</number>
+         <number>1</number>
         </property>
         <widget class="QWidget" name="page_file">
          <layout class="QVBoxLayout" name="verticalLayout_3">
@@ -582,7 +582,7 @@
              </font>
             </property>
             <property name="currentIndex">
-             <number>0</number>
+             <number>2</number>
             </property>
             <widget class="QWidget" name="tab_upload">
              <property name="font">
@@ -613,7 +613,7 @@
               <item>
                <widget class="QTableWidget" name="table_upload">
                 <attribute name="horizontalHeaderDefaultSectionSize">
-                 <number>180</number>
+                 <number>110</number>
                 </attribute>
                 <attribute name="horizontalHeaderShowSortIndicator" stdset="0">
                  <bool>true</bool>
@@ -631,12 +631,27 @@
                 </column>
                 <column>
                  <property name="text">
-                  <string>修改时间</string>
+                  <string>大小</string>
                  </property>
                 </column>
                 <column>
                  <property name="text">
-                  <string>大小</string>
+                  <string>时间</string>
+                 </property>
+                </column>
+                <column>
+                 <property name="text">
+                  <string>速率</string>
+                 </property>
+                </column>
+                <column>
+                 <property name="text">
+                  <string>进度</string>
+                 </property>
+                </column>
+                <column>
+                 <property name="text">
+                  <string/>
                  </property>
                 </column>
                </widget>
@@ -690,7 +705,7 @@
                 </column>
                 <column>
                  <property name="text">
-                  <string>修改时间</string>
+                  <string>时间</string>
                  </property>
                 </column>
                 <column>
@@ -731,7 +746,7 @@
               <item>
                <widget class="QTableWidget" name="table_complete">
                 <attribute name="horizontalHeaderDefaultSectionSize">
-                 <number>180</number>
+                 <number>165</number>
                 </attribute>
                 <attribute name="horizontalHeaderShowSortIndicator" stdset="0">
                  <bool>true</bool>
@@ -749,12 +764,17 @@
                 </column>
                 <column>
                  <property name="text">
-                  <string>修改时间</string>
+                  <string>大小</string>
                  </property>
                 </column>
                 <column>
                  <property name="text">
-                  <string>大小</string>
+                  <string>时间</string>
+                 </property>
+                </column>
+                <column>
+                 <property name="text">
+                  <string/>
                  </property>
                 </column>
                </widget>

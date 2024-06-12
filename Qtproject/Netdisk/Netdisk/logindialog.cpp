@@ -10,6 +10,9 @@ LoginDialog::LoginDialog(QWidget *parent) :
     setWindowTitle("登录&注册");
     //窗口默认在登录页面
     ui->tw_page->setCurrentIndex(0);
+    ui->le_phone->setText("15181032832");
+    ui->le_password->setText("1");
+
 }
 
 LoginDialog::~LoginDialog()

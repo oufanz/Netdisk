@@ -6,7 +6,7 @@ struct FileInfo
 {
 
     FileInfo():fileid(0) , size(0),pFile( nullptr )
-      , pos(0) , isPause(0){
+      , pos(0) , isPause(0),timestamp(0){
 
     }
 
@@ -20,7 +20,7 @@ struct FileInfo
     QString absolutePath;
 
     int pos; //上传或下载到什么位置
-
+    int timestamp; //时间戳：文件的身份
     int isPause; //暂停  0 1
 
     //文件指针

@@ -8,6 +8,7 @@
 #include <QMessageBox>
 #include <QDebug>
 #include <QDateTime>
+#include <QTextCodec>
 #include "md5.h"
 #define MD5_KEY "ou_fan"
 #define NetMap( a ) m_netPackMap[ a - _DEF_PACK_BASE ]
@@ -41,13 +42,10 @@ CKernel::CKernel(QObject *parent) : QObject(parent)
             SLOT(slot_destroy()));
     connect(m_mainDialog, SIGNAL(SIG_uploadFile(QString,QString)),this,
             SLOT(slot_uploadFile(QString,QString)));
-#ifndef TEST
+    connect(this,SIGNAL(SIG_updateUploadFileProgress(int,int)),m_mainDialog,
+            SLOT(slot_updateUploadFileProgress(int,int)));
     m_tcpClient->OpenNet(m_ip.toStdString().c_str(),m_port.toInt());
     m_loginDialog->show();
-#endif
-#ifdef TEST
-    m_mainDialog->show();
-#endif
 #ifdef USE_SERVER
     //测试对服务器发送数据
 //    char strBuf[100]= "hello server";
@@ -124,7 +122,6 @@ static std::string getMD5(QString val){//static 仅当前文件可用
     return md.toString();
 }
 //编码转换
-#include<QTextCodec>
 
 // QString -> char* gb2312
 void Utf8ToGB2312( char* gbbuf , int nlen ,QString& utf8)
@@ -228,6 +225,7 @@ void CKernel::slot_uploadFile(QString path, QString dir)
         return;
     }
     int timestamp=QDateTime::currentDateTime().toString("hhmmsszzz").toInt();
+    info.timestamp= timestamp;
     qDebug()<<__func__<<"文件的时间戳:"<<timestamp;
     //存储在map里面: key时间戳, value 文件信息 防止传一样的文件
     m_mapTimestampToFileInfo[timestamp] =info;//拷贝构造
@@ -325,6 +323,8 @@ void CKernel::slot_dealUploaFiledRs(unsigned int lSendIP, char *buf, int nlen)
     //更新fileid
     info.fileid=rs->fileid;
 
+    //插入上传信息到“上传中
+    m_mainDialog->slot_insertUploadFile(info);
     //发送文件块内容请求
     STRU_FILE_CONTENT_RQ rq;
     rq.fileid=rs->fileid;
@@ -351,6 +351,9 @@ void CKernel::slot_dealFileContentRs(unsigned int lSendIP, char *buf, int nlen)
     }else{
         info.pos += rs->len;
     }
+    //方案1：写信号槽（多线程）
+    //方案2：直接调用  一定是当前函数在主线程;
+    Q_EMIT SIG_updateUploadFileProgress(info.timestamp,info.pos);//唯一确定该文件
     //判断是否结束;
     if(info.pos>=info.size){
         fclose(info.pFile);

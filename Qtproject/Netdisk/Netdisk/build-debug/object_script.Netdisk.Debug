@@ -11,6 +11,7 @@ debug/ckernel.o
 debug/logindialog.o
 debug/main.o
 debug/maindialog.o
+debug/mytablewidgetitem.o
 debug/qrc_resourse.o
 debug/moc_INetMediator.o
 debug/moc_ckernel.o

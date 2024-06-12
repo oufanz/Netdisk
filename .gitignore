@@ -3,3 +3,5 @@ build/
 build-Release/
 *.o
 *.exe
+*.Debug
+*.Release

@@ -11,6 +11,7 @@ release/ckernel.o
 release/logindialog.o
 release/main.o
 release/maindialog.o
+release/mytablewidgetitem.o
 release/qrc_resourse.o
 release/moc_INetMediator.o
 release/moc_ckernel.o

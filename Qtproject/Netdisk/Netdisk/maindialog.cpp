@@ -3,6 +3,8 @@
 #include <QMessageBox>
 #include <QDebug>
 #include <QFileDialog>
+#include<QProgressBar>
+#include "mytablewidgetitem.h"
 MainDialog::MainDialog(QWidget *parent)
     : QDialog(parent)
     , ui(new Ui::MainDialog)
@@ -96,5 +98,95 @@ void MainDialog::slot_uploadFile(bool flag)
 void MainDialog::slot_uploadFolder(bool flag)
 {
     qDebug() << __func__;
+}
+
+void MainDialog::slot_insertUploadFile(FileInfo &info)
+{
+    //表格插入信息
+    qDebug()<<__func__;
+    //列：文件 大小 时间 速率 进度 按钮
+    //新增一行
+    int rows = ui->table_upload->rowCount();
+    ui->table_upload->setRowCount(rows+1);
+    //为这一行添加对象
+    MyTableWidgetItem *item0 = new MyTableWidgetItem;
+    item0->slot_setInfo(info);
+    ui->table_upload->setItem(rows,0,item0);
+
+    QTableWidgetItem*item1 = new QTableWidgetItem(QString::number(info.size));
+    ui->table_upload->setItem(rows,1,item1);
+
+    QTableWidgetItem*item2 = new QTableWidgetItem(info.time);
+    ui->table_upload->setItem(rows,2,item2);
+
+    QTableWidgetItem*item3 = new QTableWidgetItem("0KB/s");   //todo
+    ui->table_upload->setItem(rows,3,item3);
+    //进度条：
+    QProgressBar* progress = new QProgressBar ;
+    progress->setMaximum(info.size);
+    ui->table_upload->setCellWidget(rows,4,progress);
+
+
+    QPushButton * button =new QPushButton;
+    if(!info.isPause){
+        button->setText("暂停");
+    }else{
+        button->setText("开始");
+    }
+    ui->table_upload->setCellWidget(rows,5,button);
+
+}
+
+void MainDialog::slot_insertUploadFileComplete(FileInfo &info)
+{
+    //列：文件 大小 时间 上传完成
+    qDebug()<<__func__;
+    //新增一行
+    int rows = ui->table_complete->rowCount();
+    ui->table_complete->setRowCount(rows+1);
+    //为这一行添加对象
+    MyTableWidgetItem *item0 = new MyTableWidgetItem;
+    item0->slot_setInfo(info);
+    ui->table_complete->setItem(rows,0,item0);
+
+    QTableWidgetItem*item1 = new QTableWidgetItem(QString::number(info.size));
+    ui->table_complete->setItem(rows,1,item1);
+
+    QTableWidgetItem*item2 = new QTableWidgetItem(info.time);
+    ui->table_complete->setItem(rows,2,item2);
+
+    QTableWidgetItem*item3 = new QTableWidgetItem("上传完成");   //todo
+    ui->table_complete->setItem(rows,3,item3);
+
+}
+
+void MainDialog::slot_updateUploadFileProgress(int timestamp, int pos)
+{
+    qDebug()<<__func__;
+
+    //遍历所有项 第0列
+    int row = ui->table_upload->rowCount();
+    for(int i = 0;i < row ; i++){
+        //取到每个文件信息的时间戳，看是否一致;
+       MyTableWidgetItem*  item0 =(MyTableWidgetItem*) ui->table_upload->item(i ,0);
+       if(item0->m_info.timestamp==timestamp){
+           //一致：更新进度
+           //看是否结束
+           item0->m_info.pos=pos;
+           QProgressBar*  item4 =(QProgressBar*) ui->table_upload->cellWidget(i,4);
+           item4->setValue(pos);
+           if(item4->value()>=item4->maximum()){
+               //是删除这一项,添加到已完成
+               slot_deleteUploadFileByRow(i);//删除该行
+               slot_insertUploadFileComplete(item0->m_info);
+               return;
+           }
+       }
+    }
+}
+//todo
+void MainDialog::slot_deleteUploadFileByRow(int row)
+{
+
 }
 

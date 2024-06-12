@@ -27,7 +27,7 @@ private:
     void setNetPackMap();
     void SendData(char *buf,int len);
 signals:
-
+    void SIG_updateUploadFileProgress(int timestamp,int pos);
 public:
     //单例模式
     static CKernel *GetInstance(){
@@ -40,7 +40,6 @@ private slots:
     //界面槽函数
     void slot_registerCommit(QString tel,QString password,QString name);
     void slot_LoginCommit(QString tel,QString password);
-
     //普通槽函数
     void slot_destroy();
     void slot_uploadFile(QString path,QString dir);
